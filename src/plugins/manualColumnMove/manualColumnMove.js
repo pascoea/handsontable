@@ -56,17 +56,14 @@ function ManualColumnMove() {
     }
   }
 
-  
   function refreshHandlePosition(TH, delta) {
-	  var box = TH.getBoundingClientRect();
-	  //this causes the handle to appear on the right side of the box.
-	  //var handleWidth = 6;
-    //if (delta > 0 && false) {
-
-      //handle.style.left = (box.left + box.width - handleWidth) + 'px';
-    //} else {
+    var box = TH.getBoundingClientRect();
+    var handleWidth = 6;
+    if (delta > 0) {
+      handle.style.left = (box.left + box.width - handleWidth) + 'px';
+    } else {
       handle.style.left = box.left + 'px';
-    //}
+    }
   }
 
   function setupGuidePosition() {
@@ -77,14 +74,12 @@ function ManualColumnMove() {
     guide.style.width = box.width + 'px';
     guide.style.height = instance.view.maximumVisibleElementHeight(0) + 'px';
     guide.style.top = handle.style.top;
-    //added a buffer to the offset to move the guide out of the way of the mouseover event
-    guide.style.left = startOffset + 5 + 'px';
+    guide.style.left = startOffset + 'px';
     instance.rootElement.appendChild(guide);
   }
 
   function refreshGuidePosition(diff) {
-	//added a buffer to the offset to move the guide out of the way of the mouseover event
-    guide.style.left = startOffset + diff + 5 +'px';
+    guide.style.left = startOffset + diff + 'px';
   }
 
   function hideHandleAndGuide() {
@@ -128,11 +123,7 @@ function ManualColumnMove() {
             var col = instance.view.wt.wtTable.getCoords(th).col;
             if (col >= 0) { //not TH above row header
               endCol = col;
-              //sending the "target" will send the span with text or the "relative" div, causing the handle to land in odd places.
-              //send the th instead.
-               
-              //refreshHandlePosition(e.target, endCol - startCol);
-              refreshHandlePosition(th, endCol - startCol);
+              refreshHandlePosition(e.target, endCol - startCol);
             }
           } else {
             setupHandlePosition.call(instance, th);
